@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Application</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        background-color: #f9f9f9;
+      }
+      #quiz-container {
+        max-width: 600px;
+        padding: 20px;
+        margin-top: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .question {
+        font-weight: bold;
+        margin: 10px 0;
+      }
+      .options {
+        margin-bottom: 20px;
+      }
+      .options label {
+        display: block;
+        margin: 5px 0;
+      }
+      #submit-btn {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #result {
+        margin-top: 20px;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="quiz-container">
+      <h2>Quiz</h2>
+      <form id="quiz-form"></form>
+      <button id="submit-btn">Submit</button>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          question: "What is the capital of France?",
+          options: ["Berlin", "Madrid", "Paris", "Rome"],
+          answer: "Paris",
+        },
+        {
+          question: "What is 2 + 2?",
+          options: ["3", "4", "5", "6"],
+          answer: "4",
+        },
+        {
+          question: "What is the capital of Japan?",
+          options: ["Seoul", "Beijing", "Tokyo", "Bangkok"],
+          answer: "Tokyo",
+        },
+      ];
+
+      const quizForm = document.getElementById("quiz-form");
+      const resultDisplay = document.getElementById("result");
+
+      function generateQuiz() {
+        questions.forEach((q, index) => {
+          const questionDiv = document.createElement("div");
+          questionDiv.classList.add("question");
+          questionDiv.textContent = `${index + 1}. ${q.question}`;
+          quizForm.appendChild(questionDiv);
+
+          const optionsDiv = document.createElement("div");
+          optionsDiv.classList.add("options");
+
+          q.options.forEach((option) => {
+            const label = document.createElement("label");
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = `question${index}`;
+            radio.value = option;
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(option));
+            optionsDiv.appendChild(label);
+          });
+
+          quizForm.appendChild(optionsDiv);
+        });
+      }
+
+      function calculateScore() {
+        let score = 0;
+        questions.forEach((q, index) => {
+          const selectedOption = document.querySelector(
+            `input[name="question${index}"]:checked`
+          );
+          if (selectedOption && selectedOption.value === q.answer) {
+            score++;
+          }
+        });
+        return score;
+      }
+
+      document.getElementById("submit-btn").addEventListener("click", () => {
+        const score = calculateScore();
+        resultDisplay.textContent = `Your score: ${score} out of ${questions.length}`;
+      });
+
+      generateQuiz();
+    </script>
+  </body>
+</html>

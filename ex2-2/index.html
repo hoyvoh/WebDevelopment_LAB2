@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Table Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      input[type="number"] {
+        width: 60px;
+        padding: 5px;
+        margin: 5px;
+      }
+      button {
+        padding: 8px 15px;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+      table {
+        margin: 20px auto;
+        border-collapse: collapse;
+      }
+      td,
+      th {
+        border: 1px solid #333;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Dynamic Table Generator</h2>
+    <label for="rows">Rows:</label>
+    <input type="number" id="rows" min="1" placeholder="Enter rows" />
+    <label for="cols">Columns:</label>
+    <input type="number" id="cols" min="1" placeholder="Enter columns" />
+    <button onclick="generateTable()">Generate Table</button>
+
+    <div id="table-container"></div>
+
+    <script>
+      function generateTable() {
+        const rows = document.getElementById("rows").value;
+        const cols = document.getElementById("cols").value;
+        const tableContainer = document.getElementById("table-container");
+
+        tableContainer.innerHTML = "";
+
+        const table = document.createElement("table");
+
+        for (let i = 0; i < rows; i++) {
+          const row = document.createElement("tr");
+          for (let j = 0; j < cols; j++) {
+            const cell = document.createElement("td");
+            cell.textContent = `${i + 1}, ${j + 1}`;
+            row.appendChild(cell);
+          }
+          table.appendChild(row);
+        }
+        tableContainer.appendChild(table);
+      }
+    </script>
+  </body>
+</html>
